@@ -22,7 +22,6 @@ public class TrainService {
 
     @Autowired
     TrainRepository trainRepository;
-    List<Train> trains = new ArrayList<>();
 
     public Integer addTrain(AddTrainEntryDto trainEntryDto){
 
@@ -47,7 +46,6 @@ public class TrainService {
 
         train.setRoute(route);
         train.setDepartureTime(trainEntryDto.getDepartureTime());
-        trains.add(train);
 
         return trainRepository.save(train).getTrainId();
     }
@@ -177,11 +175,11 @@ public class TrainService {
         //in problem statement)
         //You can also assume the seconds and milli seconds value will be 0 in a LocalTime format.
 
-        List<Integer> trainList = new ArrayList<>();
+        List<Integer> TrainList = new ArrayList<>();
 
-        List<Train> Trains = trainRepository.findAll();
+        List<Train> trains = trainRepository.findAll();
 
-        for (Train train : Trains){
+        for (Train train : trains){
             String s = train.getRoute();
 
             String[] stn = s.split(",");
@@ -199,11 +197,11 @@ public class TrainService {
                     int destinationMin = departureMin + (i * 60);
 
                     if (destinationMin >= startMin && destinationMin <= lastMin) {
-                        trainList.add(train.getTrainId());
+                        TrainList.add(train.getTrainId());
                     }
                 }
             }
         }
-        return trainList;
+        return TrainList;
     }
 }
