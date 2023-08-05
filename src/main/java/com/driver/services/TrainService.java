@@ -92,7 +92,7 @@ public class TrainService {
 
             if (myMap.get(seatAvailabilityEntryDto.getToStation().toString()) <= myMap.get(fromStation)) {
                 count++;
-            } else if (myMap.get(seatAvailabilityEntryDto.getFromStation().toString()) <= myMap.get(toStation)) {
+            } else if (myMap.get(seatAvailabilityEntryDto.getFromStation().toString()) >= myMap.get(toStation)) {
                 count ++;
             }
         }
