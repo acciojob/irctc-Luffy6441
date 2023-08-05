@@ -179,9 +179,9 @@ public class TrainService {
 
         List<Integer> trainList = new ArrayList<>();
 
-        List<Train> trains = trainRepository.findAll();
+        List<Train> Trains = trainRepository.findAll();
 
-        for (Train train : trains){
+        for (Train train : Trains){
             String s = train.getRoute();
 
             String[] stn = s.split(",");
