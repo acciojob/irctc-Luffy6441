@@ -22,7 +22,6 @@ public class TrainService {
 
     @Autowired
     TrainRepository trainRepository;
-
     List<Train> trains = new ArrayList<>();
 
     public Integer addTrain(AddTrainEntryDto trainEntryDto){
@@ -72,16 +71,19 @@ public class TrainService {
 
         HashMap<String , Integer> myMap = new HashMap<>();
 
-        for (int i = 0 ; i < trainRoot.length ; i++)
+        for (int i = 0 ; i < trainRoot.length ; i++) {
             myMap.put(trainRoot[i] , i);
+        }
 
-        if (!myMap.containsKey(seatAvailabilityEntryDto.getFromStation().toString()) || !myMap.containsKey(seatAvailabilityEntryDto.getToStation().toString()))
+        if (!myMap.containsKey(seatAvailabilityEntryDto.getFromStation().toString()) || !myMap.containsKey(seatAvailabilityEntryDto.getToStation().toString())) {
             return 0;
+        }
 
         int booked = 0;
 
-        for (Ticket ticket : ticketList)
+        for (Ticket ticket : ticketList) {
             booked += ticket.getPassengersList().size();
+        }
 
         int count = train.getNoOfSeats() - booked;
 
@@ -90,10 +92,11 @@ public class TrainService {
 
             String toStation = ticket.getToStation().toString();
 
-            if (myMap.get(seatAvailabilityEntryDto.getToStation().toString()) <= myMap.get(fromStation))
+            if (myMap.get(seatAvailabilityEntryDto.getToStation().toString()) <= myMap.get(fromStation)) {
                 count++;
-            else if (myMap.get(seatAvailabilityEntryDto.getFromStation().toString()) <= myMap.get(toStation))
+            } else if (myMap.get(seatAvailabilityEntryDto.getFromStation().toString()) <= myMap.get(toStation)) {
                 count ++;
+            }
         }
 
         return count + 2;
@@ -112,24 +115,28 @@ public class TrainService {
 
         String[] arr = train.getRoute().split(",");
 
-        Boolean found = false;
+        boolean found = false;
 
-        for (String stn : arr)
+        for (String stn : arr) {
             if (stn.equals(reqStation)){
                 found = true;
                 break;
             }
+        }
 
-        if (!found)
+        if (!found) {
             throw new Exception("Train is not passing from this station");
+        }
 
         int noOfPassengers = 0;
 
         List<Ticket> tickets = train.getBookedTickets();
 
-        for (Ticket ticket : tickets)
-            if (ticket.getFromStation().toString().equals(reqStation))
+        for (Ticket ticket : tickets) {
+            if (ticket.getFromStation().toString().equals(reqStation)) {
                 noOfPassengers += ticket.getPassengersList().size();
+            }
+        }
 
         return noOfPassengers;
     }
@@ -144,8 +151,9 @@ public class TrainService {
 
         int age = Integer.MIN_VALUE;
 
-        if (train.getBookedTickets().isEmpty())
+        if (train.getBookedTickets().isEmpty()) {
             return 0;
+        }
 
         List<Ticket> tickets = train.getBookedTickets();
 
@@ -153,9 +161,9 @@ public class TrainService {
 
             List<Passenger> passengers = ticket.getPassengersList();
 
-            for (Passenger passenger : passengers)
+            for (Passenger passenger : passengers) {
                 age = Math.max(age , passenger.getAge());
-
+            }
         }
 
         return age;
@@ -190,12 +198,12 @@ public class TrainService {
 
                     int destinationMin = departureMin + (i * 60);
 
-                    if (destinationMin >= startMin && destinationMin <= lastMin)
+                    if (destinationMin >= startMin && destinationMin <= lastMin) {
                         trainList.add(train.getTrainId());
+                    }
                 }
             }
         }
-
         return trainList;
     }
 }

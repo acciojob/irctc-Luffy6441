@@ -67,19 +67,19 @@ public class TicketService {
         int x = -1;
         int y = -1;
 
-        for (int i = 0 ; i < stations.length ; i++)
-            if (bookTicketEntryDto.getFromStation().toString().equals(stations[i]))
-            {
+        for (int i = 0 ; i < stations.length ; i++) {
+            if (bookTicketEntryDto.getFromStation().toString().equals(stations[i])) {
                 x = i;
                 break;
             }
+        }
 
-        for (int i = 0 ; i < stations.length ; i++)
-            if (bookTicketEntryDto.getToStation().toString().equals(stations[i]))
-            {
+        for (int i = 0 ; i < stations.length ; i++) {
+            if (bookTicketEntryDto.getToStation().toString().equals(stations[i])) {
                 y = i;
                 break;
             }
+        }
 
         if (x == -1 || y == -1 || y - x < 0)
             throw new Exception("Invalid stations");
